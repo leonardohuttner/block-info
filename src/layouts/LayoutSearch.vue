@@ -1,6 +1,6 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated >
+  <q-layout view="hHh lpR fFf">
+    <q-header reveal elevated >
       <q-toolbar>
         <q-btn
           flat
@@ -48,7 +48,7 @@
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label header> Essential Links </q-item-label>
+        <q-item-label header> BLOCKCHAIN </q-item-label>
       </q-list>
     </q-drawer>
 
