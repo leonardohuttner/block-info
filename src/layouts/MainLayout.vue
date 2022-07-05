@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh lpR fFf">
+  <q-layout view="hhh LpR fFf">
     <q-header reveal elevated >
       <q-toolbar>
         <q-btn
@@ -35,12 +35,7 @@
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-item-label header> BLOCKCHAIN </q-item-label>
-      <MenuLateral
-        v-for="link in linksList"
-        :key="link.title"
-        v-bind="link"
-      />
+      <MenuLateral/>
     </q-drawer>
 
     <q-page-container>
@@ -54,33 +49,6 @@ import { defineComponent, ref } from "vue";
 import { useQuasar } from 'quasar'
 import MenuLateral from "../components/MenuLateral.vue";
 
-const linksList = [
-    {
-        title: 'Transação',
-        caption: 'Descubra ou rastreie uma transação',
-        icon: 'paid',
-        link: 'https://forum.quasar.dev'
-    },
-    {
-        title: 'Twitter',
-        caption: '@quasarframework',
-        icon: 'rss_feed',
-        link: 'https://twitter.quasar.dev'
-    },
-    {
-        title: 'Facebook',
-        caption: '@QuasarFramework',
-        icon: 'public',
-        link: 'https://facebook.quasar.dev'
-    },
-    {
-        title: 'Quasar Awesome',
-        caption: 'Community Quasar projects',
-        icon: 'favorite',
-        link: 'https://awesome.quasar.dev'
-    }
-]
-
 export default defineComponent({
   components: { MenuLateral },
   name: "MainLayout",
@@ -91,7 +59,6 @@ export default defineComponent({
     const $q = useQuasar()
 
     return {
-      linksList,
       leftDrawerOpen,
       isDarkmode,
       toggleLeftDrawer() {

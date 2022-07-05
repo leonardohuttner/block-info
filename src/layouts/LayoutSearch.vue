@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh lpR fFf">
+  <q-layout view="hhh LpR fFf">
     <q-header reveal elevated >
       <q-toolbar>
         <q-btn
@@ -48,7 +48,7 @@
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label header> BLOCKCHAIN </q-item-label>
+        <MenuLateral/>
       </q-list>
     </q-drawer>
 
@@ -63,9 +63,11 @@ import { getDataTransation, getDataAddress } from '../services/blockchain'
 import { useRouter } from 'vue-router'
 import { defineComponent, ref } from "vue";
 import { useQuasar } from 'quasar'
+import MenuLateral from "../components/MenuLateral.vue";
 
 export default defineComponent({
   name: "MainLayout",
+  components: { MenuLateral },
 
   setup() {
     const router = useRouter()
