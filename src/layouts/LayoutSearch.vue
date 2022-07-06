@@ -1,6 +1,6 @@
 <template>
-  <q-layout view="hhh LpR fFf">
-    <q-header reveal elevated >
+  <q-layout view="lHh Lpr lFf">
+    <q-header elevated :class="isDarkmode ? 'bg-primary':'bg-primary'">
       <q-toolbar>
         <q-btn
           flat
@@ -13,21 +13,18 @@
         />
 
         <q-toolbar-title class="row">
-          <img
-            alt="Logo"
-            src="~assets/logo.png"
-            style="height: 35px"
-          >
+          <img alt="Logo" src="~assets/logo.png" style="height: 35px" />
           <span class="text-black">LOCKINFO</span>
         </q-toolbar-title>
 
         <div>
           <q-input
             rounded
+            standout
             dense
             outlined
             color="secondary"
-            label-color="secondary"
+            label-color="black"
             label="HASH"
             v-model="hash"
             @keyup.enter="buscar"
@@ -59,8 +56,8 @@
 </template>
 
 <script>
-import { getDataTransation, getDataAddress } from '../services/blockchain'
-import { useRouter } from 'vue-router'
+import { getDataTransation, getDataAddress } from "../services/blockchain";
+import { useRouter } from "vue-router";
 import { defineComponent, ref } from "vue";
 import { useQuasar } from 'quasar'
 import MenuLateral from "../components/MenuLateral.vue";
@@ -70,11 +67,11 @@ export default defineComponent({
   components: { MenuLateral },
 
   setup() {
-    const router = useRouter()
+    const router = useRouter();
     const leftDrawerOpen = ref(false);
-    let isDarkmode = ref(false)
-    let hash = ref('')
-    const $q = useQuasar()
+    let isDarkmode = ref(false);
+    let hash = ref("");
+    const $q = useQuasar();
 
     return {
       leftDrawerOpen,
@@ -83,28 +80,30 @@ export default defineComponent({
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
-      toggleDarkMode(){
-        isDarkmode.value = $q.dark.isActive
-        console.log(isDarkmode)
-        $q.dark.toggle()
+      toggleDarkMode() {
+        isDarkmode.value = $q.dark.isActive;
+        console.log(isDarkmode);
+        $q.dark.toggle();
       },
-      buscar(){
+      buscar() {
         try {
+          $q.loading.show()
           getDataAddress(hash.value)
-          .then(()=>{
-            console.log('aqui',this.$route)
-            router.push(`/carteira/${hash.value}`)
-          })
-          .catch(()=>{
-            getDataTransation(hash.value)
-              .then(()=>{
-                router.push(`/transacao/${hash.value}`)
-              })
-          })
+            .then(() => {
+              $q.loading.hide()
+              router.push(`/carteira/${hash.value}`);
+            })
+            .catch(() => {
+              getDataTransation(hash.value).then(() => {
+                $q.loading.hide()
+                router.push(`/transacao/${hash.value}`);
+              });
+            });
         } catch (error) {
-          console.log(error)
+          $q.loading.hide()
+          console.log(error);
         }
-      }
+      },
     };
   },
 });
