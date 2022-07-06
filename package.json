@@ -1,8 +1,8 @@
 {
   "name": "blockinfo",
   "version": "0.0.1",
-  "description": "A Quasar Project",
-  "productName": "blockinfo",
+  "description": "Informações sobre bitcoin",
+  "productName": "BlockInfo",
   "author": "Leonardo Huttner",
   "private": true,
   "scripts": {
