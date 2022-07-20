@@ -109,7 +109,7 @@ export default defineComponent({
     align-items: center;
   }
   .card {
-    width: 600px;
+    width: 700px;
     height: 600px;
     border: 1px solid;
     border-radius: 7px;
@@ -117,7 +117,8 @@ export default defineComponent({
   }
   .side-left{
     background: rgb(22, 16, 16);
-    color: rgb(245, 241, 241);
+    background-position: center;
+    background-size: cover;
   }
   .side-rigth{
     background-color: white;

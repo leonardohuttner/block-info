@@ -1,6 +1,6 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated :class="isDarkmode ? 'bg-primary':'bg-primary'">
+  <q-layout view="hhh LpR lFf">
+    <q-header reveal elevated :class="isDarkmode ? 'bg-primary':'bg-primary'">
       <q-toolbar>
         <q-btn
           flat
