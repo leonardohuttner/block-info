@@ -18,10 +18,19 @@
             src="~assets/logo.png"
             style="height: 35px"
           >
-          <span class="text-black">LOCKINFO</span>
+          <a href="/">
+            <span class="text-black">LOCKINFO</span>
+          </a>
         </q-toolbar-title>
 
         <div>
+          <q-btn
+            icon-right="login"
+            color="secondary"
+            label="login"
+            to="/login"
+            rounded
+          />
           <q-btn
             flat
             dense
@@ -73,3 +82,8 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+a {
+  text-decoration: none;
+}
+</style>

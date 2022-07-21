@@ -14,7 +14,9 @@
 
         <q-toolbar-title class="row">
           <img alt="Logo" src="~assets/logo.png" style="height: 35px" />
-          <span class="text-black">LOCKINFO</span>
+          <a href="/">
+            <span class="text-black">LOCKINFO</span>
+          </a>
         </q-toolbar-title>
 
         <div>
@@ -108,3 +110,8 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+a {
+  text-decoration: none;
+}
+</style>
