@@ -6,6 +6,9 @@
           <p>
             Obtenha cotaçoes das principais criptos aqui mesmo!
           </p>
+          <section>
+            <Coins />
+          </section>
         </section>
 
         <div class="col justify-center content-center">
@@ -18,9 +21,11 @@
 
 <script>
 import { defineComponent } from 'vue'
+import Coins from '../../components/Coins.vue'
 
 export default defineComponent({
-  name: 'IndexPage'
+  name: 'IndexPage',
+  components: { Coins }
 })
 </script>
 <style scoped>

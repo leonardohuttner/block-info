@@ -1,5 +1,4 @@
 import { apiBlockChain, apiViaWallet } from "src/boot/axios";
-const formato = "json";
 
 const getDataBlockHash = (block_hash) => {
   const request = apiBlockChain.get(`rawblock/${block_hash}`);
