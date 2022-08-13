@@ -8,21 +8,13 @@ import axios from "axios";
 // "export default () => {}" function below (which runs individually
 // for each client)
 const apiBlockChain = axios.create({
-  baseURL: "https://blockchain.info/",
+  baseURL: "https://api-cripto-info.herokuapp.com/",
 });
-const apiCoin = axios.create({
-  baseURL: "https://economia.awesomeapi.com.br/json/",
-});
-
-const apiViaWallet = axios.create({
-  baseURL:"https://explorer.viawallet.com/res/btc/"
-})
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
   app.config.globalProperties.$axios = apiBlockChain;
-  app.config.globalProperties.$api = apiCoin;
 });
 
-export { apiBlockChain, apiCoin, apiViaWallet };
+export { apiBlockChain };

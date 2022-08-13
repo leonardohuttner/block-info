@@ -34,7 +34,7 @@
 </template>
 <script>
 import { defineComponent,ref } from 'vue'
-import { getCurrency } from "../services/cotacao";
+import { getCurrency } from "../services/blockchain";
 
 export default defineComponent({
   name: 'CoinsPage',
