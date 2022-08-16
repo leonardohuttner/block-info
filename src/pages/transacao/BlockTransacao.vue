@@ -1,71 +1,87 @@
 <template>
   <q-page>
-    <div class="container">
+    <div class="q-ma-md">
+      <q-card class="my-card" flat bordered>
+        <q-card-section>
+          <q-card-section>
+            <span>FEE:</span>
+            <p>
+              <strong>{{ data.fee }}</strong>
+            </p>
 
-      <div class="card row">
-        <div class="side-left col">
-          <p>Receipt for</p>
-          <p><strong>BITCOIN</strong></p>
-          <hr>
+            <q-icon name="calendar_today" />
+            <span>DATE:</span>
+            <p>
+              <strong>{{ converteEpoc(data.time) }}</strong>
+            </p>
+            <span>CONFIRMATIONS:</span>
+            <q-icon
+              :name="data.confirmations > 6 ? 'done' : 'close'"
+              :color="data.confirmations ? 'green' : 'red'"
+            />
+            <p>
+              <strong>{{ data.confirmations }}</strong>
+            </p>
+          </q-card-section>
 
-          <section>
-            <span>
-              <q-icon name="wallet"/>
-              <span>FEE:</span>
-              <p><strong>{{data.fee}}</strong></p>
-              <hr>
-            </span>
-          </section>
+          <q-separator />
 
-          <section>
-            <span>
-              <q-icon name="calendar_today"/>
-              <span>DATE:</span>
-              <p><strong>{{data.time}}</strong></p>
-              <hr>
-            </span>
-          </section>
+          <q-card-actions>
+            ENTRADAS
+            <q-space />
+            <q-btn
+              color="grey"
+              round
+              flat
+              dense
+              :icon="expandedIn ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
+              @click="expandedIn = !expandedIn"
+            />
+          </q-card-actions>
+          <q-slide-transition>
+            <div v-show="expandedIn">
+              <q-card-section class="text-subitle2">
+                <div
+                  class="item"
+                  v-for="transacao in data.inputs"
+                  :key="transacao.prev_addresses[0]"
+                >
+                  <p>Endereço: {{ transacao.prev_addresses[0] }}</p>
+                  <p>Valor: {{ transacao.prev_value }}</p>
+                </div>
+              </q-card-section>
+            </div>
+          </q-slide-transition>
 
-          <section>
-            <span>
-              <q-icon name="receipt"/>
-              <span>CONFIRMATIONS:</span>
-              <p><strong>{{data.confirmations}}</strong></p>
-              <q-icon :name="data.confirmations > 6 ? 'done':'close'" :color="data.confirmations ? 'green':'red'" />
-              <hr>
-            </span>
-          </section>
-        </div>
-
-        <div class="side-rigth col">
-          <p>
-            <q-icon name="monetization_on"/>
-            <span>
-              {{data.time}}
-            </span>
-          </p>
-          <hr>
-      <div class="col item">
-        Entradas:
-        <div v-for="transacao in data.inputs" :key="transacao.prev_addresses[0]">
-          <p>{{transacao.prev_addresses[0]}}</p>
-          <p>Valor: {{transacao.prev_value}}</p>
-        </div>
-      </div>
-
-      <div class="item">
-        Saidas:
-        <div v-for="transacao in data.outputs" :key="transacao.addresses[0]">
-          <p>
-          Endereço: {{transacao.addresses[0]}}
-          </p>
-          <p>
-          Valor: {{transacao.value}}
-          </p>
-        </div>
-      </div>
-        </div>
-      </div>
+          <q-card-actions>
+            SAIDAS
+            <q-space />
+            <q-btn
+              color="grey"
+              round
+              flat
+              dense
+              :icon="expandedOut ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
+              @click="expandedOut = !expandedOut"
+            />
+          </q-card-actions>
+          <q-slide-transition>
+            <div v-show="expandedOut">
+              <q-card-section class="text-subitle2">
+                <div
+                  class="item"
+                  v-for="transacao in data.outputs"
+                  :key="transacao.addresses[0]"
+                >
+                  <p>Endereço: {{ transacao.addresses[0] }}</p>
+                  <p>Valor: {{ transacao.value }}</p>
+                  <q-separator />
+                </div>
+              </q-card-section>
+            </div>
+          </q-slide-transition>
+        </q-card-section>
+      </q-card>
     </div>
   </q-page>
 </template>
@@ -73,15 +89,19 @@
 <script>
 import { getDataTransation } from "../../services/blockchain";
 import { defineComponent, ref } from "vue";
-import {useQuasar} from 'quasar'
+import { useQuasar } from "quasar";
 
 export default defineComponent({
   name: "ErrorNotFound",
   setup() {
     const $q = useQuasar();
-    const data = ref('')
+    const data = ref("");
+    const expandedIn = ref(false);
+    const expandedOut = ref(false);
     return {
-      data
+      data,
+      expandedIn,
+      expandedOut,
     };
   },
   mounted() {
@@ -89,39 +109,36 @@ export default defineComponent({
   },
   methods: {
     getData(txID) {
-      this.$q.loading.show()
+      this.$q.loading.show();
       getDataTransation(txID).then((res) => {
         this.data = res.data;
-        this.$q.loading.hide()
+        this.$q.loading.hide();
       });
+    },
+    converteEpoc(time) {
+      let tempoMl = new Date(time * 1000);
+      const convertido = tempoMl.toLocaleString();
+      return convertido;
     },
   },
 });
 </script>
 
 <style scoped>
-  .container{
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  }
-  .card {
-    width: 700px;
-    height: 600px;
-    border: 1px solid;
-    border-radius: 7px;
-    background: rgb(161, 35, 35);
-  }
-  .side-left{
-    background: rgb(22, 16, 16);
-    background-position: center;
-    background-size: cover;
-  }
-  .side-rigth{
-    background-color: white;
-    color: rgb(37, 37, 37);
-  }
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.mycard {
+  width: 100%;
+  max-width: 500px;
+}
+.item {
+  padding: 5px;
+  margin-bottom: 8px;
+  border: 1px solid;
+  border-radius: 9px;
+}
 </style>

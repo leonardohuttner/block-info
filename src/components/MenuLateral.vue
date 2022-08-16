@@ -7,14 +7,14 @@
             </q-item-section>
             <q-item-section>
                 <q-item-label>{{link.title}}</q-item-label>
-                <q-item-label caption>{{link.caption}}</q-item-label>    
+                <q-item-label caption>{{link.caption}}</q-item-label>
             </q-item-section>
         </q-item>
     </q-list>
 </template>
 
 <script>
-import { defineComponent,ref } from "vue";
+import { defineComponent } from "vue";
 
 const linksList = [
     {

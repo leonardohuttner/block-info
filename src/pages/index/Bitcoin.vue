@@ -16,7 +16,7 @@
           </p>
         </section>
 
-        <div class="col justify-center content-center">
+        <div class="col imagem">
             <img src="~assets/btc-phone.png" style="max-height: 400px;" class="imagem" alt="Bitcoin">
         </div>
       </div>
@@ -44,8 +44,10 @@ export default defineComponent({
   align-items: center;
 }
 .imagem {
-    width: 280px;
-    align-items: center;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3rem;
   }
 
 @media (max-width: 754px) {
