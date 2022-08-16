@@ -4,17 +4,17 @@
       <q-card class="my-card" flat bordered>
         <q-card-section>
           <q-card-section>
-            <span>FEE:</span>
+            <span>Taxa:</span>
             <p>
               <strong>{{ data.fee }}</strong>
             </p>
 
             <q-icon name="calendar_today" />
-            <span>DATE:</span>
+            <span>Data:</span>
             <p>
               <strong>{{ converteEpoc(data.time) }}</strong>
             </p>
-            <span>CONFIRMATIONS:</span>
+            <span>Confirmações:</span>
             <q-icon
               :name="data.confirmations > 6 ? 'done' : 'close'"
               :color="data.confirmations ? 'green' : 'red'"
