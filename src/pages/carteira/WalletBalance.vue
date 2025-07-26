@@ -59,7 +59,7 @@
             {{ data.total_trasations }})
           </div>
 
-          <div v-for="(tx, idx) in paginatedTxs" :key="tx.hash" class="q-my-sm">
+          <div v-for="tx in paginatedTxs" :key="tx.hash" class="q-my-sm">
             <q-card class="bg-grey-2 q-pa-sm rounded-borders">
               <div class="text-bold">Hash: {{ tx.hash }}</div>
               <div>Taxa: {{ satoshiForBtc(tx.fee) }} BTC</div>
