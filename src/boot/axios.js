@@ -8,7 +8,7 @@ import axios from "axios";
 // "export default () => {}" function below (which runs individually
 // for each client)
 const apiBlockChain = axios.create({
-  baseURL: "https://api-cript.fly.dev/",
+  baseURL: "https://n8n-oracle.leonardohuttner.com.br/webhook/api/",
 });
 
 export default boot(({ app }) => {
