@@ -1,28 +1,27 @@
 <template>
   <q-page class="q-pa-md bg-grey-2">
     <div class="column items-center q-gutter-md">
-      <!-- Pesquisar outro endereço -->
-      <div class="row q-gutter-sm items-center">
+      <div
+        class="q-gutter-sm items-center"
+        style="max-width: 800px; width: 100%"
+      >
         <q-input
           v-model="searchAddress"
           label="Endereço Bitcoin"
+          class="full-width"
           :error="invalidAddress"
           :error-message="invalidAddress ? 'Endereço inválido' : ''"
           filled
           dense
-          class="bg-white rounded-borders"
         />
-        <q-btn label="Buscar" color="primary" @click="onSearch" rounded />
+        <q-btn
+          label="Buscar"
+          color="primary"
+          @click="onSearch"
+          rounded
+          class="text-black full-width"
+        />
       </div>
-
-      <!-- QR Code do endereço -->
-      <!--
-      <q-card class="q-pa-md bg-white rounded-borders text-center" v-if="data.address">
-        <div class="text-subtitle1">QR Code do Endereço</div>
-        <qrcode-vue :value="data.address" :size="180" class="q-my-md" />
-        <div class="text-caption">{{ data.address }}</div>
-      </q-card>
-      -->
 
       <!-- Loading -->
       <q-spinner color="primary" size="40px" v-if="loading" />
@@ -30,7 +29,7 @@
       <!-- Dados do endereço -->
       <q-card
         v-if="!loading && data.address"
-        class="q-pa-md bg-white shadow-2 rounded-borders"
+        class="q-pa-md comprovante shadow-2 rounded-borders"
         style="max-width: 800px; width: 100%"
       >
         <q-card-section>
@@ -91,17 +90,25 @@
           </div>
 
           <!-- Paginação controles -->
-          <div class="row justify-center q-mt-md">
+          <div class="row justify-center q-mt-md text-black">
             <q-pagination
               v-model="currentPage"
               :max="totalPages"
               direction-links
               boundary-links
-              color="primary"
+              color="black"
               size="sm"
             />
           </div>
         </q-card-section>
+      </q-card>
+      <q-card
+        class="q-pa-md bg-white rounded-borders text-center"
+        v-if="data.address"
+      >
+        <div class="text-subtitle1">QR Code do Endereço</div>
+        <qrcode-vue :value="data.address" :size="180" class="q-my-md" />
+        <div class="text-caption">{{ data.address }}</div>
       </q-card>
     </div>
   </q-page>
@@ -111,12 +118,12 @@
 import { ref, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useQuasar } from "quasar";
-// import QrcodeVue from 'qrcode.vue' // ❌ Comentado: não está sendo usado por enquanto
+import QrcodeVue from "qrcode.vue";
 
 export default {
-  // components: {
-  //   QrcodeVue
-  // },
+  components: {
+    QrcodeVue,
+  },
   setup() {
     const data = ref({
       txs: [],
@@ -132,13 +139,18 @@ export default {
     const invalidAddress = ref(false);
 
     const $q = useQuasar();
-    const route = useRoute();
+    const routes = useRoute();
 
     const isValidAddress = (addr) => {
-      return (
-        typeof addr === "string" &&
-        /^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$/.test(addr)
-      );
+      if (typeof addr !== "string") return false;
+
+      // Base58Check: P2PKH ou P2SH
+      const base58Regex = /^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$/;
+
+      // Bech32: bc1q... (P2WPKH) ou bc1p... (P2TR)
+      const bech32Regex = /^(bc1)[0-9ac-hj-np-z]{11,71}$/;
+
+      return base58Regex.test(addr) || bech32Regex.test(addr);
     };
 
     const satoshiForBtc = (satoshis) => {
@@ -184,7 +196,7 @@ export default {
     };
 
     onMounted(() => {
-      getData(route.params.addr);
+      getData(routes.params.addr);
     });
 
     return {
@@ -204,6 +216,14 @@ export default {
 </script>
 
 <style scoped>
+.comprovante {
+  background: #fff8dc;
+  border: 1px solid #f3e6b2;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  font-family: "Courier New", Courier, monospace;
+  padding: 1rem;
+  border-radius: 8px;
+}
 .rounded-borders {
   border-radius: 12px;
 }
