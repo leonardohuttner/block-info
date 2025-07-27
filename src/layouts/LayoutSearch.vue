@@ -1,6 +1,6 @@
 <template>
-  <q-layout view="hhh LpR lFf">
-    <q-header reveal elevated :class="isDarkmode ? 'bg-primary':'bg-primary'">
+  <q-layout view="hHh lpR lFf">
+    <q-header reveal elevated :class="isDarkmode ? 'bg-primary' : 'bg-primary'">
       <q-toolbar>
         <q-btn
           flat
@@ -47,7 +47,7 @@
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <MenuLateral/>
+        <MenuLateral />
       </q-list>
     </q-drawer>
 
@@ -61,7 +61,7 @@
 import { getDataTransation, getDataAddress } from "../services/blockchain";
 import { useRouter } from "vue-router";
 import { defineComponent, ref } from "vue";
-import { useQuasar } from 'quasar'
+import { useQuasar } from "quasar";
 import MenuLateral from "../components/MenuLateral.vue";
 
 export default defineComponent({
@@ -89,20 +89,20 @@ export default defineComponent({
       },
       buscar() {
         try {
-          $q.loading.show()
+          $q.loading.show();
           getDataAddress(hash.value)
             .then(() => {
-              $q.loading.hide()
+              $q.loading.hide();
               router.push(`/carteira/${hash.value}`);
             })
             .catch(() => {
               getDataTransation(hash.value).then(() => {
-                $q.loading.hide()
+                $q.loading.hide();
                 router.push(`/transacao/${hash.value}`);
               });
             });
         } catch (error) {
-          $q.loading.hide()
+          $q.loading.hide();
           console.log(error);
         }
       },

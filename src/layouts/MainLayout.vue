@@ -1,6 +1,6 @@
 <template>
-  <q-layout view="hhh LpR fFf">
-    <q-header reveal elevated >
+  <q-layout view="hHh lpR lFf">
+    <q-header reveal elevated>
       <q-toolbar>
         <q-btn
           flat
@@ -13,11 +13,7 @@
         />
 
         <q-toolbar-title class="row">
-          <img
-            alt="Logo"
-            src="~assets/logo.png"
-            style="height: 35px"
-          >
+          <img alt="Logo" src="~assets/logo.png" style="height: 35px" />
           <a href="/">
             <span class="text-black">LOCKINFO</span>
           </a>
@@ -44,7 +40,7 @@
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <MenuLateral/>
+      <MenuLateral />
     </q-drawer>
 
     <q-page-container>
@@ -55,7 +51,7 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-import { useQuasar } from 'quasar'
+import { useQuasar } from "quasar";
 import MenuLateral from "../components/MenuLateral.vue";
 
 export default defineComponent({
@@ -64,8 +60,8 @@ export default defineComponent({
 
   setup() {
     const leftDrawerOpen = ref(false);
-    let isDarkmode = ref(false)
-    const $q = useQuasar()
+    let isDarkmode = ref(false);
+    const $q = useQuasar();
 
     return {
       leftDrawerOpen,
@@ -73,11 +69,11 @@ export default defineComponent({
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
-      toggleDarkMode(){
-        isDarkmode.value = $q.dark.isActive
-        console.log(isDarkmode)
-        $q.dark.toggle()
-      }
+      toggleDarkMode() {
+        isDarkmode.value = $q.dark.isActive;
+        console.log(isDarkmode);
+        $q.dark.toggle();
+      },
     };
   },
 });
