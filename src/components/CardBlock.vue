@@ -1,13 +1,17 @@
 <template>
-  <div :style="{ backgroundColor: bloco.corDeFundo }" class="wave">
-    <div class="wrapper" :class="{ reverse: index % 2 !== 0 }">
-      <section class="text-card">
-        <h3>{{ bloco.titulo }}</h3>
-        <p>{{ bloco.texto }}</p>
-      </section>
+  <div :style="{ backgroundColor: bloco.corDeFundo }" class="card-block">
+    <div class="card-frame">
+      <div class="card-glow"></div>
+      <div class="card-content" :class="{ reverse: index % 2 !== 0 }">
+        <section class="text-card">
+          <div class="card-badge">{{ bloco.titulo }}</div>
+          <h3>{{ bloco.titulo }}</h3>
+          <p>{{ bloco.texto }}</p>
+        </section>
 
-      <div class="image-container">
-        <img :src="bloco.imagem" alt="imagem ilustrativa" />
+        <div class="image-container">
+          <img :src="bloco.imagem" alt="imagem ilustrativa" />
+        </div>
       </div>
     </div>
   </div>
@@ -30,78 +34,133 @@ export default {
 </script>
 
 <style scoped>
-.wave {
-  width: 99vw;
-  height: 96vh;
+.card-block {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  position: relative;
   padding: 2rem 1rem;
+  box-sizing: border-box;
 }
 
-.wrapper {
+.card-frame {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  border-radius: 32px;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.2);
+}
+
+.card-glow {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 189, 79, 0.35) 0%,
+    transparent 70%
+  );
+  top: -80px;
+  right: -100px;
+  filter: blur(14px);
+  pointer-events: none;
+}
+
+.card-content {
   display: flex;
-  flex-direction: row;
-  align-items: center; /* Alinha verticalmente */
-  justify-content: center; /* Alinha horizontalmente */
+  align-items: center;
+  justify-content: space-between;
   gap: 2rem;
   flex-wrap: wrap;
-  height: 100%; /* Garante que a wrapper ocupe toda a altura da seção */
+  padding: 2rem;
+  position: relative;
+  z-index: 1;
 }
 
-.wrapper.reverse {
+.card-content.reverse {
   flex-direction: row-reverse;
 }
 
 .text-card {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(6px);
-  padding: 1.5rem;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  max-width: 500px;
-  flex: 1;
+  flex: 1 1 330px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 28px;
+  padding: 2rem;
   color: #fff;
-  font-family: "Poppins", sans-serif;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Centraliza o conteúdo dentro do card */
+  gap: 1rem;
+  min-width: 280px;
+}
+
+.card-badge {
+  display: inline-flex;
   align-items: center;
-  text-align: center; /* Centraliza o texto */
+  justify-content: center;
+  width: fit-content;
+  padding: 0.5rem 0.9rem;
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
 }
 
 .text-card h3 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
+  font-size: 2rem;
+  margin: 0;
 }
 
 .text-card p {
   font-size: 1rem;
-  line-height: 1.5;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .image-container {
-  flex: 1;
+  flex: 1 1 320px;
   display: flex;
   justify-content: center;
-  align-items: center; /* Alinha verticalmente */
+  align-items: center;
+  min-width: 280px;
 }
 
 .image-container img {
-  max-width: 100%;
-  max-height: 400px;
-  border-radius: 10px;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 28px;
+  box-shadow: 0 35px 80px rgba(0, 0, 0, 0.25);
+  animation: float 7s ease-in-out infinite;
 }
 
-/* Responsivo */
-@media (max-width: 768px) {
-  .wrapper {
-    flex-direction: column !important;
+@media (max-width: 900px) {
+  .card-content {
+    flex-direction: column;
+    align-items: center;
   }
 
-  .image-container img {
-    max-height: 300px;
+  .card-content.reverse {
+    flex-direction: column;
   }
 
-  .text-card {
-    max-width: 90%;
+  .text-card,
+  .image-container {
+    width: 100%;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
   }
 }
 </style>
