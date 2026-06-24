@@ -29,6 +29,12 @@ const linksList = [
     icon: "timeline",
     link: "/carteira",
   },
+  {
+    title: "Como começar",
+    caption: "Leia um guia simples sobre blockchain e mineração.",
+    icon: "help_outline",
+    link: "/help",
+  },
 ];
 
 export default defineComponent({

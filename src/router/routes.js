@@ -2,16 +2,12 @@ const routes = [
   {
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
-    children: [
-      { path: "", component: () => import("pages/IndexPage.vue") }
-    ],
+    children: [{ path: "", component: () => import("pages/IndexPage.vue") }],
   },
   {
     path: "/",
     component: () => import("layouts/LoginLayout.vue"),
-    children: [
-      { path: "/login", component: () => import("pages/Login.vue") }
-    ],
+    children: [{ path: "/login", component: () => import("pages/Login.vue") }],
   },
   {
     path: "/carteira",
@@ -19,9 +15,9 @@ const routes = [
     children: [
       { path: "", component: () => import("pages/carteira/WalletIndex.vue") },
       {
-        path: "/carteira/:addr",
+        path: ":addr",
         component: () => import("pages/carteira/WalletBalance.vue"),
-      }
+      },
     ],
   },
   {
@@ -29,10 +25,19 @@ const routes = [
     component: () => import("layouts/LayoutSearch.vue"),
     children: [
       {
-        path: "/transacao/:txid",
+        path: "",
+        component: () => import("pages/transacao/TransacaoIndex.vue"),
+      },
+      {
+        path: ":txid",
         component: () => import("pages/transacao/BlockTransacao.vue"),
-      }
+      },
     ],
+  },
+  {
+    path: "/help",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/Help.vue") }],
   },
 
   {

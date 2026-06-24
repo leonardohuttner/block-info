@@ -7,12 +7,27 @@ const getDataBlockHash = (block_hash) => {
 
 const getDataTransation = (tx_hash) => {
   const request = apiBlockChain.get(`transacao?id=${tx_hash}`);
-  return request.then((res) => res.data);
+  return request.then((res) => {
+    const body = res.data;
+    // API may return an array like [{ code:0, data: { ... }, message:'ok' }]
+    if (Array.isArray(body) && body.length > 0 && body[0].data) {
+      return body[0].data;
+    }
+    // Otherwise return as-is (backward compatible)
+    return body;
+  });
 };
 
 const getDataAddress = (rawaddr) => {
   const request = apiBlockChain.get(`carteira?id=/${rawaddr}`);
-  return request.then((res) => res.data);
+  return request.then((res) => {
+    const body = res.data;
+    // API may return an array with a single wallet object
+    if (Array.isArray(body) && body.length > 0) {
+      return body[0];
+    }
+    return body;
+  });
 };
 
 const getCurrency = (coin) => {

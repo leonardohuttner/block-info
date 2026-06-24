@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-md bg-grey-2">
+  <q-page class="q-pa-md bg-dark text-white">
     <div class="column items-center q-gutter-md">
       <div
         class="q-gutter-sm items-center"
@@ -13,13 +13,14 @@
           :error-message="invalidAddress ? 'Endereço inválido' : ''"
           filled
           dense
+          color="amber"
         />
         <q-btn
           label="Buscar"
-          color="primary"
+          color="warning"
           @click="onSearch"
           rounded
-          class="text-black full-width"
+          class="full-width"
         />
       </div>
 
@@ -29,8 +30,12 @@
       <!-- Dados do endereço -->
       <q-card
         v-if="!loading && data.address"
-        class="q-pa-md comprovante shadow-2 rounded-borders"
-        style="max-width: 800px; width: 100%"
+        class="q-pa-md comprovante shadow-2 rounded-borders bg-grey-10 text-white"
+        style="
+          max-width: 800px;
+          width: 100%;
+          border: 1px solid rgba(255, 255, 255, 0.12);
+        "
       >
         <q-card-section>
           <div class="text-h6">📄 Recibo de Bitcoin</div>
@@ -59,7 +64,10 @@
           </div>
 
           <div v-for="tx in paginatedTxs" :key="tx.hash" class="q-my-sm">
-            <q-card class="bg-grey-2 q-pa-sm rounded-borders">
+            <q-card
+              class="bg-grey-10 q-pa-sm rounded-borders text-white"
+              style="border: 1px solid rgba(255, 255, 255, 0.12)"
+            >
               <div class="text-bold">Hash: {{ tx.hash }}</div>
               <div>Taxa: {{ satoshiForBtc(tx.fee) }} BTC</div>
               <div class="row q-gutter-md">
@@ -90,21 +98,22 @@
           </div>
 
           <!-- Paginação controles -->
-          <div class="row justify-center q-mt-md text-black">
+          <div class="row justify-center q-mt-md text-white">
             <q-pagination
               v-model="currentPage"
               :max="totalPages"
               direction-links
               boundary-links
-              color="black"
+              color="amber"
               size="sm"
             />
           </div>
         </q-card-section>
       </q-card>
       <q-card
-        class="q-pa-md bg-white rounded-borders text-center"
+        class="q-pa-md bg-grey-10 rounded-borders text-center text-white"
         v-if="data.address"
+        style="border: 1px solid rgba(255, 255, 255, 0.12)"
       >
         <div class="text-subtitle1">QR Code do Endereço</div>
         <qrcode-vue :value="data.address" :size="180" class="q-my-md" />
@@ -176,7 +185,9 @@ export default {
       currentPage.value = 1;
 
       try {
-        const res = await fetch(`https://blockchain.info/rawaddr/${addr}`);
+        const res = await fetch(
+          `https://n8n-oracle.leonardohuttner.com.br/webhook/api/carteira?id=${addr}`
+        );
         if (!res.ok) throw new Error("Endereço não encontrado");
         const json = await res.json();
         data.value = {
@@ -217,12 +228,13 @@ export default {
 
 <style scoped>
 .comprovante {
-  background: #fff8dc;
-  border: 1px solid #f3e6b2;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
   font-family: "Courier New", Courier, monospace;
   padding: 1rem;
   border-radius: 8px;
+  color: #fff;
 }
 .rounded-borders {
   border-radius: 12px;
